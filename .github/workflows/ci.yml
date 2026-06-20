@@ -28,4 +28,12 @@ jobs:
           flake8 .
 
       - name: Run tests
-        run: pytest -v	
+        run: pytest -v
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Simulate deployment
+        run: echo "Deploying version $(git rev-parse --short HEAD) to production..."
